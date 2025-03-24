@@ -6,24 +6,24 @@
 </template>
 
 <script>
+import { mapGetters,mapActions } from "vuex";
 import MessageList from "./MessageList.vue"
 import MessageInput from "./MessageInput.vue"
 
 export default{
-    components:{
-        MessageList,
-        MessageInput,
-    },
+    components:{MessageList,MessageInput},
 
-    data(){
-        return{
-            messages:[],//メッセージ一覧を保持するデータ
-        };
+    computed:{
+        ...mapGetters(['allMessages']),
+        messages(){
+            return this.allMessages;
+        }
     },
 
     methods:{
+        ...mapActions(['sendMessage']),
         addMessage(newMessage){
-            this.messages.push({id:Date.now(),text:newMessage});
+            this.sendMessage(newMessage);
         },
     },
 };
